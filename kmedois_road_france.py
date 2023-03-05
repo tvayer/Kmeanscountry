@@ -56,5 +56,5 @@ for i in range(centroids.shape[0]):
                    fontsize=11, zorder=200)
 
 plt.tight_layout()
-plt.savefig('./kmedoids_shortest_path_{0}_{1}.pdf'.format(country, K))
+plt.savefig('./figures/kmedoids_shortest_path_{0}_{1}.pdf'.format(country, K))
 # %%
