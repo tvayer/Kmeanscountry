@@ -10,11 +10,11 @@ cmap = plt.cm.get_cmap('tab10')
 df = pd.read_csv('./worldcities.csv', sep=',')
 country = 'France'
 # keep only the n_max first cities (in term of number of inhabitants)
-n_max = 1500
+n_max = 2016
 df_small = df[df.country == country][['city', 'lat', 'lng']].iloc[0:n_max]
 X = df_small[['lng', 'lat']].to_numpy(dtype=float)
 cities = [(name, lng, lat) for (name, lat, lng) in df_small.values]
-cities_per_request = 100
+cities_per_request = 96
 D = get_cities(cities,
                cities_per_request=cities_per_request,
                verbose=True,
@@ -22,7 +22,7 @@ D = get_cities(cities,
                time_sleep=1e-3
                )
 # %%
-K = 4  # number of clusters
+K = 3  # number of clusters
 kmeans = KMedoids(n_clusters=K, random_state=0, metric='precomputed')
 kmeans.fit(D)
 classes = kmeans.labels_

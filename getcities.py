@@ -67,5 +67,5 @@ def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force
         # Terminate the progress bar
         print((100 - number_shown) * '#')
         # Save everything
-        np.save('dists', dists)
+        np.save('dists{}'.format(cities_count), dists)
     return dists
