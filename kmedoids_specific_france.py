@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 from sklearn_extra.cluster import KMedoids
 from scipy.spatial import Voronoi, voronoi_plot_2d
 
-cmap = plt.cm.get_cmap('tab10')
+cmap = plt.cm.get_cmap('tab20')
 # %% Load data
 df = pd.read_csv('./data/pop_fr_geoloc_1975_2010.csv', sep=',')
 df = df.sort_values(by='pop_2010',ascending=False)
-n_max = 5000 # maximum number of cities
+n_max = 7000 # maximum number of cities
 df_small = df[['com_nom', 'lat', 'long']].iloc[0:n_max]
 X = df_small[['long', 'lat']].to_numpy(dtype=float)
 
@@ -72,7 +72,7 @@ for i in range(centroids.shape[0]):
     lateqal = df_small['lat'] == centroids[i, 1]
     lngeqal = df_small['long'] == centroids[i, 0]
     name = df_small[lngeqal & lateqal]['com_nom'].values[0]
-    ax[1].annotate(name.title(), (centroids[i, 0], centroids[i, 1]+0.2),
+    ax[1].annotate(name.title(), (centroids[i, 0], centroids[i, 1]+0.3),
                    fontsize=11, zorder=200)
 
 
