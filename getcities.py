@@ -11,13 +11,13 @@ class DivisibleError(Exception):
 
 def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force_recompute=False):
     # len(cities) must be divisible by cities_per_request
-    if os.path.exists('dists.npy') and not force_recompute:
-        dists = np.load('dists.npy')
+    cities_count = len(cities)
+    if os.path.exists('dists{}.npy') and not force_recompute:
+        dists = np.load('dists{}.npy')
     else:
         print('Dist file does not exits: create it')
         # Build the distance matrix
         # dists[i][j] is the time to go from the i-th biggest city to the j-th biggest city
-        cities_count = len(cities)
         dists = np.zeros((cities_count, cities_count))
 
         # Initialize the progress bar
