@@ -8,7 +8,7 @@ from scipy.spatial import Voronoi, voronoi_plot_2d
 
 cmap = plt.cm.get_cmap('tab10')
 # %% Load data
-df = pd.read_csv('./worldcities.csv', sep=',')
+df = pd.read_csv('./data/worldcities.csv', sep=',')
 country = 'Italy'
 df_small = df[df.country == country][['city', 'lat', 'lng']]
 X = df_small[['lng', 'lat']].to_numpy(dtype=float)
@@ -74,5 +74,5 @@ for i in range(centroids.shape[0]):
 
 
 plt.tight_layout()
-plt.savefig('./kmedoids_{0}_{1}.pdf'.format(country, K))
+plt.savefig('./figures/kmedoids_{0}_{1}.pdf'.format(country, K))
 # %%

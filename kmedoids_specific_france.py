@@ -8,7 +8,7 @@ from scipy.spatial import Voronoi, voronoi_plot_2d
 
 cmap = plt.cm.get_cmap('tab10')
 # %% Load data
-df = pd.read_csv('./pop_fr_geoloc_1975_2010.csv', sep=',')
+df = pd.read_csv('./data/pop_fr_geoloc_1975_2010.csv', sep=',')
 df = df.sort_values(by='pop_2010',ascending=False)
 n_max = 5000 # maximum number of cities
 df_small = df[['com_nom', 'lat', 'long']].iloc[0:n_max]
