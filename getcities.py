@@ -1,7 +1,7 @@
 # %% Thanks to AdrienVannson https://github.com/AdrienVannson
 import numpy as np
 import requests
-from time import sleep
+from time import sleep, time
 import os
 
 
@@ -12,10 +12,10 @@ class DivisibleError(Exception):
 def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force_recompute=False):
     # len(cities) must be divisible by cities_per_request
     cities_count = len(cities)
-    if os.path.exists('dists{}.npy') and not force_recompute:
-        dists = np.load('dists{}.npy')
+    if os.path.exists('./data/dists{}.npy'.format(cities_count)) and not force_recompute:
+        dists = np.load('./data/dists{}.npy'.format(cities_count))
     else:
-        print('Dist file does not exits: create it')
+        print('Dists file does not exits or you force computing it: let\'s go')
         # Build the distance matrix
         # dists[i][j] is the time to go from the i-th biggest city to the j-th biggest city
         dists = np.zeros((cities_count, cities_count))
@@ -31,7 +31,7 @@ def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force
 
         for i_request in range(size):
             for j_request in range(size):
-
+                st = time()
                 # Update the progress bar
                 percentage = 100 * (i_request * size + j_request) / (size ** 2)
                 while number_shown < percentage:
@@ -54,9 +54,10 @@ def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force
 
                 response = requests.get(url)
                 local_dists = np.array(response.json()['durations'])
+                ed = time()
                 if verbose:
-                    print('-- Request ({}, {}) done ... (have to reach = ({},{}))--'.format(
-                        i_request, j_request, size-1, size-1))
+                    print('-- Request ({0}, {1}) done in {2:.5f}s... (have to reach = ({3},{4}))--'.format(
+                        i_request, j_request, ed-st, size-1, size-1))
                 for i in range(cities_per_request):
                     for j in range(cities_per_request):
                         dists[i_request * cities_per_request + i][j_request * cities_per_request + j] = \
@@ -67,5 +68,5 @@ def get_cities(cities, cities_per_request=50, time_sleep=1, verbose=False, force
         # Terminate the progress bar
         print((100 - number_shown) * '#')
         # Save everything
-        np.save('dists{}'.format(cities_count), dists)
+        np.save('./data/dists{}'.format(cities_count), dists)
     return dists

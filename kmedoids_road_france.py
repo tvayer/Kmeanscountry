@@ -8,11 +8,11 @@ from getcities import get_cities
 cmap = plt.cm.get_cmap('tab10')
 # %% Load data
 df = pd.read_csv('./data/pop_fr_geoloc_1975_2010.csv', sep=',')
-df = df.sort_values(by='pop_2010',ascending=False)
-n_max = 3000 # maximum number of cities
+df = df.sort_values(by='pop_2010', ascending=False)
+n_max = 1500  # maximum number of cities
 df_small = df[['com_nom', 'lat', 'long']].iloc[0:n_max]
 X = df_small[['long', 'lat']].to_numpy(dtype=float)
-#%%
+# %%
 cities = [(name, lng, lat) for (name, lat, lng) in df_small.values]
 cities_per_request = 100
 D = get_cities(cities,
@@ -56,5 +56,5 @@ for i in range(centroids.shape[0]):
                    fontsize=11, zorder=200)
 
 plt.tight_layout()
-plt.savefig('./figures/kmedoids_shortest_path_{0}_{1}.pdf'.format(country, K))
+plt.savefig('./figures/kmedoids_shortest_path_{1}.pdf'.format(K))
 # %%

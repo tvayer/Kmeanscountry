@@ -9,14 +9,14 @@ from scipy.spatial import Voronoi, voronoi_plot_2d
 cmap = plt.cm.get_cmap('tab20')
 # %% Load data
 df = pd.read_csv('./data/pop_fr_geoloc_1975_2010.csv', sep=',')
-df = df.sort_values(by='pop_2010',ascending=False)
-n_max = 7000 # maximum number of cities
+df = df.sort_values(by='pop_2010', ascending=False)
+n_max = 7000  # maximum number of cities
 df_small = df[['com_nom', 'lat', 'long']].iloc[0:n_max]
 X = df_small[['long', 'lat']].to_numpy(dtype=float)
 
-#%%
+# %%
 K = 5  # number of clusters
-kmeans = KMedoids(n_clusters=K, random_state=0)
+kmeans = KMedoids(n_clusters=K, random_state=42, method='pam')
 kmeans.fit(X)
 # %%
 size = 10
