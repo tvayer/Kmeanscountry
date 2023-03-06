@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from sklearn_extra.cluster import KMedoids
 from getcities import get_cities
-cmap = plt.cm.get_cmap('tab10')
+cmap = plt.cm.get_cmap('tab20')
 # %% Load data
 df = pd.read_csv('./data/pop_fr_geoloc_1975_2010.csv', sep=',')
 df = df.sort_values(by='pop_2010', ascending=False)
@@ -22,12 +22,12 @@ D = get_cities(cities,
                time_sleep=1e-3
                )
 # %%
-K = 3  # number of clusters
+K = 13  # number of clusters
 kmeans = KMedoids(n_clusters=K,
                   random_state=0,
                   metric='precomputed',
                   init='k-medoids++',
-                  method='pam'
+                  #method='pam'
                   )
 kmeans.fit(D)
 classes = kmeans.labels_
@@ -61,5 +61,5 @@ for i in range(centroids.shape[0]):
                    fontsize=11, zorder=200, weight="bold")
 
 plt.tight_layout()
-plt.savefig('./figures/kmedoids_shortest_path_{}.pdf'.format(K))
+plt.savefig('./figures/kmedoids_shortest_path_{}.png'.format(K))
 # %%
